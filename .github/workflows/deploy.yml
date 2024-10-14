@@ -11,28 +11,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: '20'
 
-      - name: Install Root dependencies
-        run: |
-          npm ci
-
-      - name: Build Root
-        run: |
-          npm run build
-
       - name: Install dependencies
-        run: |
-          cd packages/lexical-playground
-          HUSKY=0 npm ci
+        run: HUSKY=0 npm ci
 
       - name: Build
         run: |
+          HUSKY=0 npm run build
           cd packages/lexical-playground
-          npm run build
+          HUSKY=0 npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
