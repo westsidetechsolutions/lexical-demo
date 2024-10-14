@@ -85,7 +85,7 @@ import {sanitizeUrl} from '../../utils/url';
 import {EmbedConfigs} from '../AutoEmbedPlugin';
 import {INSERT_COLLAPSIBLE_COMMAND} from '../CollapsiblePlugin';
 import {InsertEquationDialog} from '../EquationsPlugin';
-import {INSERT_EXCALIDRAW_COMMAND} from '../ExcalidrawPlugin';
+import {HTMLViewButton} from '../HTMLViewPlugin';
 import {
   INSERT_IMAGE_COMMAND,
   InsertImageDialog,
@@ -880,7 +880,7 @@ export default function ToolbarPlugin({
         onClick={() => {
           activeEditor.dispatchCommand(REDO_COMMAND, undefined);
         }}
-        title={IS_APPLE ? 'Redo (⇧⌘Z)' : 'Redo (Ctrl+Y)'}
+        title={IS_APPLE ? 'Redo (⌘Y)' : 'Redo (Ctrl+Y)'}
         type="button"
         className="toolbar-item"
         aria-label="Redo">
@@ -1062,6 +1062,68 @@ export default function ToolbarPlugin({
               <span className="text">Clear Formatting</span>
             </DropDownItem>
           </DropDown>
+          <Divider />
+          <HTMLViewButton />
+          <Divider />
+          <DropDown
+            disabled={!isEditable}
+            buttonClassName="toolbar-item spaced"
+            buttonLabel="Align"
+            buttonIconClassName="icon left-align"
+            buttonAriaLabel="Formatting options for text alignment">
+            <DropDownItem
+              onClick={() => {
+                activeEditor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
+              }}
+              className="item">
+              <i className="icon left-align" />
+              <span className="text">Left Align</span>
+            </DropDownItem>
+            <DropDownItem
+              onClick={() => {
+                activeEditor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
+              }}
+              className="item">
+              <i className="icon center-align" />
+              <span className="text">Center Align</span>
+            </DropDownItem>
+            <DropDownItem
+              onClick={() => {
+                activeEditor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
+              }}
+              className="item">
+              <i className="icon right-align" />
+              <span className="text">Right Align</span>
+            </DropDownItem>
+            <DropDownItem
+              onClick={() => {
+                activeEditor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
+              }}
+              className="item">
+              <i className="icon justify-align" />
+              <span className="text">Justify Align</span>
+            </DropDownItem>
+            <Divider />
+            <DropDownItem
+              onClick={() => {
+                activeEditor.dispatchCommand(
+                  OUTDENT_CONTENT_COMMAND,
+                  undefined,
+                );
+              }}
+              className="item">
+              <i className={'icon ' + (isRTL ? 'indent' : 'outdent')} />
+              <span className="text">Outdent</span>
+            </DropDownItem>
+            <DropDownItem
+              onClick={() => {
+                activeEditor.dispatchCommand(INDENT_CONTENT_COMMAND, undefined);
+              }}
+              className="item">
+              <i className={'icon ' + (isRTL ? 'outdent' : 'indent')} />
+              <span className="text">Indent</span>
+            </DropDownItem>
+          </DropDown>
           {canViewerSeeInsertDropdown && (
             <>
               <Divider />
@@ -1126,17 +1188,6 @@ export default function ToolbarPlugin({
                   className="item">
                   <i className="icon gif" />
                   <span className="text">GIF</span>
-                </DropDownItem>
-                <DropDownItem
-                  onClick={() => {
-                    activeEditor.dispatchCommand(
-                      INSERT_EXCALIDRAW_COMMAND,
-                      undefined,
-                    );
-                  }}
-                  className="item">
-                  <i className="icon diagram-2" />
-                  <span className="text">Excalidraw</span>
                 </DropDownItem>
                 <DropDownItem
                   onClick={() => {
