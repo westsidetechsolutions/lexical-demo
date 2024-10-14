@@ -19,12 +19,9 @@ jobs:
       - name: Install Root dependencies
         run: |
           npm ci
-          cd packages/lexical-playground
-          npm ci
 
       - name: Build Root
         run: |
-          cd packages/lexical-playground
           npm run build
 
       - name: Install dependencies
