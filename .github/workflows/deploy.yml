@@ -23,7 +23,7 @@ jobs:
         run: |
           HUSKY=0 npm run build
           cd packages/lexical-playground
-          HUSKY=0 npm run build-prod
+          VITE_BASE_URL=/lexical-demo/ HUSKY=0 npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
